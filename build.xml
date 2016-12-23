@@ -91,8 +91,13 @@ where:
 		<!-- Can't specify initial template with <xslt> task so have to
 		     fall back to running Saxon as Java app. -->
 		<java classname="net.sf.saxon.Transform"
-					classpath="${saxon.jar}"
 					fork="true">
+			<classpath>
+		         <!--Also load Saxon JAR specified separately via "saxon.jar" parameter and prefer 
+                                                it to the possible Saxon present in the Java class path.-->
+		         <pathelement path="${saxon.jar}"/>
+		         <pathelement path="${java.class.path}"/>
+		        </classpath>
 			<arg value="-ext:on" />
 			<arg value="-s:${xspec.xml}" />
 			<arg value="-o:${xspec.result.xml}" />
